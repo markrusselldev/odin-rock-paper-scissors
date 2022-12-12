@@ -48,11 +48,20 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-const playerSelection = "ROCK ";
+//const playerSelection = " RoCK ";
 // const computerSelection = getComputerChoice();
 // console.log(playRound(playerSelection, computerSelection));
 
-let score = 0;
+function chooseWinner(user, computer) {
+  if (user === computer) return "It's a tie after five rounds! Damn those ties.";
+  if (user > computer) return "You";
+  if (user < computer) return "Computer";
+}
+
+let userScore = 0;
+let computerScore = 0;
+let tieScore = 0;
+let winner = "";
 // Loop five times and each time call playRound()
 // Keep score
 // Report winner or loser at end
@@ -61,13 +70,17 @@ function game() {
   let results = [];
   for (let i = 0; i < 5; i++) {
     let result = playRound(playerSelection, getComputerChoice());
-    if (result.includes("win")) score++;
+    if (result.includes("win")) userScore++;
+    if (result.includes("lose")) computerScore++;
+    if (result.includes("tie")) tieScore++;
     results.push(result);
   }
+  winner = chooseWinner(userScore, computerScore);
   return results;
 }
 
-console.log(game());
-console.log(score);
+let play = game();
+console.log(play);
+console.log(`Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner} `);
 
-// document.getElementById("demo").innerHTML = game() + score;
+alert(`${play.map((line, index) => `${index + 1}. ${line}`).join("\r\n")} \n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`);
