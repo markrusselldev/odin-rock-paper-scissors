@@ -49,5 +49,25 @@ function playRound(playerSelection, computerSelection) {
 }
 
 const playerSelection = "ROCK ";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+// const computerSelection = getComputerChoice();
+// console.log(playRound(playerSelection, computerSelection));
+
+let score = 0;
+// Loop five times and each time call playRound()
+// Keep score
+// Report winner or loser at end
+function game() {
+  let playerSelection = prompt("Enter Rock, Paper or Scissors");
+  let results = [];
+  for (let i = 0; i < 5; i++) {
+    let result = playRound(playerSelection, getComputerChoice());
+    if (result.includes("win")) score++;
+    results.push(result);
+  }
+  return results;
+}
+
+console.log(game());
+console.log(score);
+
+// document.getElementById("demo").innerHTML = game() + score;
