@@ -13,16 +13,41 @@ function getComputerChoice() {
   let randomInt = getRandomInt(3);
   return choices[randomInt];
 }
-
 //console.log(getComputerChoice());
 
-// Make playerSelection lowercase (computerSelection is already lowercase)
-// Compare playerSelection with computerSelection
-// IF
-
-function playRound(playerSelection, computerSelection) {
-  let lowercasePlayerSelection = playerSelection.toLowerCase();
-  return lowercasePlayerSelection;
+// Capitalize first letter of string from fundamentals-part3-functions
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1);
 }
 
-//console.log(playRound("ROCK", "scissors"));
+// Make playerSelection lowercase (computerSelection is already lowercase)
+// Compare player selection and computer selection
+// If player selection and computer selection match, return tie message
+// Switch through computer selection and compare to player selection
+// If player selection wins, return win message
+// If computer selection wins, return lose message
+function playRound(playerSelection, computerSelection) {
+  let cleanPlayerSelection = playerSelection.toLowerCase().trim();
+  if (cleanPlayerSelection === computerSelection) return `It's a tie. The computer also chose ${cleanPlayerSelection}.`;
+  switch (computerSelection) {
+    case "rock":
+      if (cleanPlayerSelection === "paper") return `You win! ${capitalize(cleanPlayerSelection)} beats ${computerSelection}.`;
+      if (cleanPlayerSelection === "scissors") return `You lose. ${capitalize(computerSelection)} beats ${cleanPlayerSelection}.`;
+      break;
+    case "paper":
+      if (cleanPlayerSelection === "scissors") return `You win! ${capitalize(cleanPlayerSelection)} beats ${computerSelection}.`;
+      if (cleanPlayerSelection === "rock") return `You lose. ${capitalize(computerSelection)} beats ${cleanPlayerSelection}.`;
+      break;
+    case "scissors":
+      if (cleanPlayerSelection === "rock") return `You win! ${capitalize(cleanPlayerSelection)} beats ${computerSelection}.`;
+      if (cleanPlayerSelection === "paper") return `You lose. ${capitalize(computerSelection)} beats ${cleanPlayerSelection}`;
+      break;
+    default:
+      console.error(`Something went wrong with the playRound() function. \n cleanPlayerSelection: ${cleanPlayerSelection} \n computerSelection: ${computerSelection} \n playerSelection: ${playerSelection}`);
+      return;
+  }
+}
+
+const playerSelection = "ROCK ";
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection));
