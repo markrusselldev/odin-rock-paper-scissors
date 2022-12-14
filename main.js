@@ -65,22 +65,49 @@ let winner = "";
 // Loop five times and each time call playRound()
 // Keep score
 // Report winner or loser at end
-function game() {
-  let playerSelection = prompt("Enter Rock, Paper or Scissors");
-  let results = [];
-  for (let i = 0; i < 5; i++) {
-    let result = playRound(playerSelection, getComputerChoice());
-    if (result.includes("win")) userScore++;
-    if (result.includes("lose")) computerScore++;
-    if (result.includes("tie")) tieScore++;
-    results.push(result);
-  }
-  winner = chooseWinner(userScore, computerScore);
-  return results;
-}
+// function game() {
+//   let playerSelection = prompt("Enter Rock, Paper or Scissors");
+//   let results = [];
+//   // for (let i = 0; i < 5; i++) {
+//   //   let result = playRound(playerSelection, getComputerChoice());
+//   //   if (result.includes("win")) userScore++;
+//   //   if (result.includes("lose")) computerScore++;
+//   //   if (result.includes("tie")) tieScore++;
+//   //   results.push(result);
+//   // }
 
-let play = game();
-console.log(play);
-console.log(`Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner} `);
+//   winner = chooseWinner(userScore, computerScore);
+//   return results;
+// }
 
-alert(`${play.map((line, index) => `${index + 1}. ${line}`).join("\r\n")} \n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`);
+// Add "click" event listener to each button
+const buttons = document.querySelectorAll("#buttons button");
+
+// Add results to DOM
+//const results = document.querySelector("#results");
+
+// we use the .forEach method to iterate through each button
+buttons.forEach(button => {
+  // and for each one we add a 'click' listener
+  button.addEventListener("click", () => {
+    //console.log(button.id);
+    let round = playRound(button.id, getComputerChoice());
+    if (round.includes("win")) userScore++;
+    if (round.includes("lose")) computerScore++;
+    if (round.includes("tie")) tieScore++;
+
+    const pResult = document.querySelector("#result");
+    pResult.textContent = round;
+    const pScore = document.querySelector("#score");
+    pScore.textContent = `You: ${userScore} | Computer: ${computerScore} | Tie: ${tieScore}`;
+    //results.appendChild(pResult);
+
+    //results.textContent = `${round} \r\n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`;
+  });
+});
+
+//let play = game();
+//console.log(play);
+//console.log(`Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner} `);
+
+// alert(`${play.map((line, index) => `${index + 1}. ${line}`).join("\r\n")} \n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`);
