@@ -48,49 +48,38 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-//const playerSelection = " RoCK ";
-// const computerSelection = getComputerChoice();
-// console.log(playRound(playerSelection, computerSelection));
-
+// Choose a winner based on the scores
 function chooseWinner(user, computer) {
-  if (user === computer) return "It's a tie after five rounds! Damn those ties.";
-  if (user > computer) return "You";
-  if (user < computer) return "Computer";
+  if (user === computer) return "This shouldn't be possible now.";
+  if (user > computer) return "You won the game! <br/>Shoot to play again.";
+  if (user < computer) return "The computer won this game. <br/>Shoot to play again.";
 }
 
 let userScore = 0;
 let computerScore = 0;
 let tieScore = 0;
 let winner = "";
-// Loop five times and each time call playRound()
-// Keep score
-// Report winner or loser at end
-// function game() {
-//   let playerSelection = prompt("Enter Rock, Paper or Scissors");
-//   let results = [];
-//   // for (let i = 0; i < 5; i++) {
-//   //   let result = playRound(playerSelection, getComputerChoice());
-//   //   if (result.includes("win")) userScore++;
-//   //   if (result.includes("lose")) computerScore++;
-//   //   if (result.includes("tie")) tieScore++;
-//   //   results.push(result);
-//   // }
 
-//   winner = chooseWinner(userScore, computerScore);
-//   return results;
-// }
+const pWinner = document.querySelector("#winner");
+
+// Reset the game
+function reset() {
+  userScore = 0;
+  computerScore = 0;
+  tieScore = 0;
+  winner = "";
+  pWinner.textContent = "";
+}
 
 // Add "click" event listener to each button
 const buttons = document.querySelectorAll("#buttons button");
-
-// Add results to DOM
-//const results = document.querySelector("#results");
 
 // we use the .forEach method to iterate through each button
 buttons.forEach(button => {
   // and for each one we add a 'click' listener
   button.addEventListener("click", () => {
-    //console.log(button.id);
+    if (userScore === 5 || computerScore === 5) reset();
+
     let round = playRound(button.id, getComputerChoice());
     if (round.includes("win")) userScore++;
     if (round.includes("lose")) computerScore++;
@@ -99,15 +88,12 @@ buttons.forEach(button => {
     const pResult = document.querySelector("#result");
     pResult.textContent = round;
     const pScore = document.querySelector("#score");
-    pScore.textContent = `You: ${userScore} | Computer: ${computerScore} | Tie: ${tieScore}`;
-    //results.appendChild(pResult);
+    pScore.innerHTML = `You: ${userScore} &bull; Computer: ${computerScore} &bull; Tie: ${tieScore}`;
 
-    //results.textContent = `${round} \r\n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`;
+    if (userScore === 5 || computerScore === 5) {
+      winner = chooseWinner(userScore, computerScore);
+      pWinner.innerHTML = winner;
+      // add a button to play again
+    }
   });
 });
-
-//let play = game();
-//console.log(play);
-//console.log(`Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner} `);
-
-// alert(`${play.map((line, index) => `${index + 1}. ${line}`).join("\r\n")} \n Score - You: ${userScore} Computer: ${computerScore} Tie: ${tieScore} \n Winner: ${winner}`);
